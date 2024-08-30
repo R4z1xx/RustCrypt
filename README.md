@@ -3,7 +3,7 @@ RustCrypt is a command-line tool written in Rust that simulates ransomware behav
 
 
 # Download 
-Download the latest release available here : https://github.com/R4z1xx/RustCrypt/releases/latest
+Download the latest release available here (zip file) : https://github.com/R4z1xx/RustCrypt/releases/latest
 
 # Usage
 ```
