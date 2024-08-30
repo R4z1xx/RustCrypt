@@ -2,9 +2,10 @@
 RustCrypt is a command-line tool written in Rust that simulates ransomware behavior, including file encryption and decryption.
 
 
+# Download 
+Download the latest release available here : https://github.com/R4z1xx/RustCrypt/releases/latest
 
 # Usage
-Download the latest release available here : https://github.com/R4z1xx/RustCrypt/releases/latest
 ```
 PS C:\> .\RustCrypt.exe --help
         ____             __  ______                 __
