@@ -28,7 +28,7 @@ Options:
   -V, --version    Print version
 ```
 ## Simple usage examples
-Encryption/decryption key can be found in the "README-RustCrypt.txt" written on the user desktop after encryption.
+> Encryption/decryption key can be found in the "README-RustCrypt.txt" written on the user desktop after encryption.
 ```
 # Start encryption using default key
 PS C:\> .\RustCrypt.exe -e
