@@ -4,18 +4,34 @@ use aes_gcm::aead::generic_array::GenericArray;
 use std::fs::{self, File};
 use std::io::{self, Read, Write};
 use std::path::Path;
+use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 pub fn decrypt_files<P: AsRef<Path>>(start_dir: P, key: &[u8], extensions: &[&str]) -> io::Result<()> {
+    let mut stdout = StandardStream::stdout(ColorChoice::Auto);
     for entry in fs::read_dir(start_dir)? {
         let entry = entry?;
         let path = entry.path();
         
         if path.is_dir() {
-            decrypt_files(&path, key, extensions)?;
+            match decrypt_files(&path, key, extensions) {
+                Ok(_) => {},
+                Err(e) => {
+                    stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true)).unwrap();
+                    writeln!(&mut stdout, "Failed to decrypt directory {:?}: {}", path, e).unwrap();
+                    stdout.reset().unwrap();
+                }
+                
+            }
         } else if let Some(ext) = path.extension() {
             if extensions.contains(&ext.to_str().unwrap_or("")) {
-                println!("Decrypting file : {:?}", path);
-                decrypt_file(&path, key)?;
+                match decrypt_file(&path, key) {
+                    Ok(_) => println!("Successfully decrypted: {:?}", path),
+                    Err(e) => {
+                        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true)).unwrap();
+                        writeln!(&mut stdout, "Failed to decrypt file {:?}: {}", path, e).unwrap();
+                        stdout.reset().unwrap();
+                    }
+                }
             }
         }
     }

