@@ -39,6 +39,7 @@ PS C:\> .\RustCrypt.exe -e -k "my_secret_key"
 # Start decryption
 PS C:\> .\RustCrypt.exe -d -k "my_secret_key"
 ```
+All encrypted files will have the `.rcry` extension after the original file name.
 
 # Compilation
 You might want to compile the source code on your own, to do so you'll need to have Rust installed on your system. If you haven't installed Rust yet, you can do so by following the instructions [here](https://www.rust-lang.org/tools/install).
