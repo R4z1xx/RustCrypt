@@ -41,6 +41,9 @@ PS C:\> .\RustCrypt.exe -d -k "my_secret_key"
 ```
 All encrypted files will have the `.rcry` extension after the original file name.
 
+To ensure that the endpoint remains operational after encryption, the following extensions will not be encrypted : <br>
+`dll`, `ini`, `sys`, `exe`, `msi`, `NLS`, `acm`, `nls`, `EXE`, `dat`, `efi`, `mui`.
+
 # Compilation
 You might want to compile the source code on your own, to do so you'll need to have Rust installed on your system. If you haven't installed Rust yet, you can do so by following the instructions [here](https://www.rust-lang.org/tools/install).
 
