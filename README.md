@@ -5,6 +5,9 @@ RustCrypt is a command-line tool written in Rust that simulates ransomware behav
 # Download 
 Download the latest release available here (zip file) : https://github.com/R4z1xx/RustCrypt/releases/latest
 
+> If you need to populate the endpoint you want to encrypt, you can use another tool I wrote for this use case : https://github.com/R4z1xx/windows-populator.
+<br>It will create a bunch of files and folders in the user's directories.
+
 # Usage
 ```
 PS C:\> .\RustCrypt.exe --help
